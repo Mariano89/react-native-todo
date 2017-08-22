@@ -31,12 +31,13 @@ export default class yingTodo extends Component {
       email: "",
       password: "",
       tasks: [],
-      currentTask: ""
+      currentTask: "",
+      selectTask: ""
     };
   }
 
   _pushTask() {
-    console.log("your task is to ", this.state.currentTask);
+    console.log("you entered ", this.state.currentTask);
     this.setState(
       {
         tasks: [...this.state.tasks, this.state.currentTask],
@@ -44,8 +45,18 @@ export default class yingTodo extends Component {
       },
       () => {
         console.log(this.state.tasks);
+        // assure task gets emptied
+        console.log("current task is now blank", this.state.currentTask);
       }
     );
+  }
+
+  _removeTask(task, key) {
+    let arr = this.state.tasks;
+    arr.splice(key, 1);
+    this.setState({ tasks: arr }, () => {
+      console.log("you deleted task: ", task);
+    });
   }
 
   _onLogin(props) {
@@ -85,9 +96,25 @@ export default class yingTodo extends Component {
             {this.state.tasks.map((task, key) => {
               return (
                 <View style={styles.taskText} key={key}>
-                  <Text>
-                    {task}
-                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Text>
+                      {task}
+                    </Text>
+                    <Button
+                      onPress={() => {
+                        this._removeTask(
+                          task,
+                          key
+                        ), (this._removeTask = this._removeTask.bind(this));
+                      }}
+                      title="X"
+                    />
+                  </View>
                 </View>
               );
             })}
