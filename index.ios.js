@@ -12,9 +12,11 @@ import {
   TextInput,
   Button,
   NavigatorIOS,
+  TouchableHighlight,
   View
 } from "react-native";
 import { StackNavigator } from "react-navigation";
+import Icon from "react-native-vector-icons/FontAwesome";
 import Auth0 from "react-native-auth0";
 
 const auth0 = new Auth0({
@@ -22,7 +24,7 @@ const auth0 = new Auth0({
   clientId: "V0gcX0da8slfjcbQeF4a4hSoYgzaRryA"
 });
 
-const width = "90%";
+const width = "85%";
 
 export default class yingTodo extends Component {
   constructor(props) {
@@ -105,15 +107,24 @@ export default class yingTodo extends Component {
                     <Text>
                       {task}
                     </Text>
-                    <Button
-                      onPress={() => {
-                        this._removeTask(
-                          task,
-                          key
-                        ), (this._removeTask = this._removeTask.bind(this));
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-end"
                       }}
-                      title="X"
-                    />
+                    >
+                      <TouchableHighlight
+                        onPress={() => {
+                          this._removeTask(
+                            task,
+                            key
+                          ), (this._removeTask = this._removeTask.bind(this));
+                        }}
+                      >
+                        <Icon name="trash" size={20} color="red" />
+                      </TouchableHighlight>
+                    </View>
                   </View>
                 </View>
               );
